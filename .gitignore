@@ -1,0 +1,11 @@
+__history/
+*.~*
+*.cfg
+*.dof
+*.dpr
+*.dcu
+*.dll
+*.dproj
+*.dproj.local
+*.identcache
+Thumbs.db

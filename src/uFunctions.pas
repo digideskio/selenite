@@ -235,16 +235,16 @@ end;
 
 function url_crack(L: plua_State): integer; cdecl;
 var
-  url: string;
+  url: TURLParts;
 begin
   lua_newtable(L);
-  url := lua_tostring(L, 1);
-  pLua_SetFieldStr(L, 'fileext', ExtractUrlFileExt(url));
-  pLua_SetFieldStr(L, 'filename', ExtractUrlFileName(url));
-  pLua_SetFieldStr(L, 'host', gethostfromurl(url));
-  pLua_SetFieldStr(L, 'path', getpathfromurl(url));
-  pLua_SetFieldInt(L, 'port', strtointsafe(getportfromurl(url)));
-  pLua_SetFieldStr(L, 'proto', before(url, ':'));
+  url := CrackURL(lua_tostring(L, 1));
+  pLua_SetFieldStr(L, 'fileext', url.fileext);
+  pLua_SetFieldStr(L, 'filename', url.filename);
+  pLua_SetFieldStr(L, 'host', url.host);
+  pLua_SetFieldStr(L, 'path', url.path);
+  pLua_SetFieldInt(L, 'port', url.port);
+  pLua_SetFieldStr(L, 'proto', url.protocol);
   result := 1;
 end;
 
@@ -329,13 +329,13 @@ end;
 
 function url_gethost(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, gethostfromurl(lua_tostring(L, 1)));
+  plua_pushstring(L, ExtractUrlHost(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function url_getpath(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, getpathfromurl(lua_tostring(L, 1)));
+  plua_pushstring(L, ExtractUrlPath(lua_tostring(L, 1)));
   result := 1;
 end;
 
@@ -347,7 +347,7 @@ end;
 
 function url_getport(L: plua_State): integer; cdecl;
 begin
-  lua_pushinteger(L, strtoint(getportfromurl(lua_tostring(L, 1))));
+  lua_pushinteger(L, extracturlport(lua_tostring(L, 1)));
   result := 1;
 end;
 
@@ -598,19 +598,19 @@ end;
 
 function hostporttourl(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, hostport2url(lua_tostring(L, 1), lua_tointeger(L, 2)));
+  plua_pushstring(L, generateurl(lua_tostring(L, 1), lua_tointeger(L, 2)));
   result := 1;
 end;
 
 function http_crackrequest(L: plua_State): integer; cdecl;
 var
-  request: string;
+  request: THTTPRequestParts;
 begin
   lua_newtable(L);
-  request := lua_tostring(L, 1);
-  pLua_SetFieldStr(L, 'method', before(request, ' '));
-  pLua_SetFieldStr(L, 'path', getpathfromrequest(request));
-  pLua_SetFieldStr(L, 'data', getpostdatafromrequest(request));
+  request := CrackHTTPRequest(lua_tostring(L, 1));
+  pLua_SetFieldStr(L, 'method', request.method);
+  pLua_SetFieldStr(L, 'path', request.path);
+  pLua_SetFieldStr(L, 'data', request.Data);
   result := 1;
 end;
 
@@ -674,7 +674,7 @@ var
   url, oldpath, newpath: string;
 begin
   url := lua_tostring(L, 1);
-  oldpath := '/' + getpathfromurl(url);
+  oldpath := '/' + ExtractUrlPath(url);
   newpath := lua_tostring(L, 2);
   newpath := replacestr(url + ' ', oldpath + ' ', newpath);
   plua_pushstring(L, newpath);

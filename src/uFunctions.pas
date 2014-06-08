@@ -547,29 +547,29 @@ end;
 
 function file_exec(L: plua_State): integer; cdecl;
 var
-  DocFileName, DocFileDir, Params: string;
+  fn, dir, Params: string;
 begin
-  DocFileName := (lua_tostring(L, 1));
-  DocFileDir := ExtractFileDir(DocFileName);
+  fn := (lua_tostring(L, 1));
+  dir := ExtractFileDir(fn);
   Params := lua_tostring(L, 2);
   if lua_isnone(L, 3) = false then
-    DocFileDir := lua_tostring(L, 3);
-  ShellExecute(0, nil, pWideChar(DocFileName), pWideChar(Params),
-    pWideChar(DocFileDir), SW_SHOWNORMAL);
+    dir := lua_tostring(L, 3);
+  ShellExecute(0, nil, pWideChar(fn), pWideChar(Params), pWideChar(dir),
+    SW_SHOWNORMAL);
   result := 1;
 end;
 
 function file_exechidden(L: plua_State): integer; cdecl;
 var
-  DocFileName, DocFileDir, Params: string;
+  fn, dir, Params: string;
 begin
-  DocFileName := (lua_tostring(L, 1));
-  DocFileDir := ExtractFileDir(DocFileName);
+  fn := (lua_tostring(L, 1));
+  dir := ExtractFileDir(fn);
   Params := lua_tostring(L, 2);
   if lua_isnone(L, 3) = false then
-    DocFileDir := lua_tostring(L, 3);
-  ShellExecute(0, nil, pWideChar(DocFileName), pWideChar(Params),
-    pWideChar(DocFileDir), SW_HIDE);
+    dir := lua_tostring(L, 3);
+  ShellExecute(0, nil, pWideChar(fn), pWideChar(Params),
+    pWideChar(dir), SW_HIDE);
   result := 1;
 end;
 
@@ -586,13 +586,8 @@ begin
 end;
 
 function file_fileurltofilename(L: plua_State): integer; cdecl;
-var
-  f: string;
 begin
-  f := lua_tostring(L, 1);
-  f := after(f, 'file://');
-  f := replacestr(f, '/', '\\');
-  plua_pushstring(L, f);
+  plua_pushstring(L, FileUrlToFilename(lua_tostring(L, 1)));
   result := 1;
 end;
 
@@ -670,14 +665,8 @@ begin
 end;
 
 function url_changepath(L: plua_State): integer; cdecl;
-var
-  url, oldpath, newpath: string;
 begin
-  url := lua_tostring(L, 1);
-  oldpath := '/' + ExtractUrlPath(url);
-  newpath := lua_tostring(L, 2);
-  newpath := replacestr(url + ' ', oldpath + ' ', newpath);
-  plua_pushstring(L, newpath);
+  plua_pushstring(L, ChangeUrlPath(lua_tostring(L, 1), lua_tostring(L, 2)));
   result := 1;
 end;
 

@@ -31,7 +31,12 @@ const
  (name:nil;func:nil)
  );
 const
-  scl_table : array[0..0] of luaL_reg =
+  classes_table : array[0..0] of luaL_reg =
+ (
+ (name:nil;func:nil)
+ );
+const
+  json_table : array[0..0] of luaL_reg =
  (
  (name:nil;func:nil)
  );
@@ -177,32 +182,33 @@ const
  (name:nil;func:nil)
  );
  const init=
- 'scl.htmlparser = sel_htmlparser'+crlf+
- 'scl.listparser = sel_listparser'+crlf+
- 'scl.stringlist = sel_stringlist'+crlf+
- 'scl.json = sel_json';
- procedure AddSubTable(L:plua_State;name:pansichar;table:plual_reg);
+ 'slx.html.parser = sel_htmlparser'+crlf+
+ 'slx.string.loop = sel_listparser'+crlf+
+ 'slx.string.list = sel_stringlist'+crlf+
+ 'slx.json.object = sel_json';
+ procedure AddTable(L:plua_State;name:pansichar;table:plual_reg);
  begin
   lua_newtable(L);
   lual_register(L,nil,table);
   lua_setfield(L, -2,name);
  end;
 begin
- lual_register(L,'stringop',@string_table);
- lual_register(L,'scl',@scl_table);
- lual_register(L,'scop',@coreop_table);
- addsubtable(L,'base64',@base64_table);
- addsubtable(L,'convert',@convert_table);
- addsubtable(L,'crypto',@crypto_table);
- addsubtable(L,'dir',@dir_table);
- addsubtable(L,'file',@file_table);
- addsubtable(L,'html',@html_table);
- addsubtable(L,'http',@http_table);
- addsubtable(L,'net',@net_table);
- addsubtable(L,'task',@task_table);
- addsubtable(L,'url',@url_table);
- addsubtable(L,'utils',@utils_table);
- addsubtable(L,'re',@regex_table);
+ lual_register(L,'slx',@coreop_table);
+ AddTable(L,'base64',@base64_table);
+ AddTable(L,'classes',@classes_table);
+ AddTable(L,'convert',@convert_table);
+ AddTable(L,'crypto',@crypto_table);
+ AddTable(L,'dir',@dir_table);
+ AddTable(L,'file',@file_table);
+ AddTable(L,'html',@html_table);
+ AddTable(L,'http',@http_table);
+ AddTable(L,'json',@json_table);
+ AddTable(L,'net',@net_table);
+ AddTable(L,'string',@string_table);
+ AddTable(L,'task',@task_table);
+ AddTable(L,'url',@url_table);
+ AddTable(L,'utils',@utils_table);
+ AddTable(L,'re',@regex_table);
  RegisterSeleniteStrList(L);
  RegisterSeleniteStrListParser(L);
  RegisterSeleniteHTMLParser(L);

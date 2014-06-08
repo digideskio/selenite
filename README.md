@@ -1,6 +1,6 @@
 # Selenite
 
-Selenite is a multi-purpose set of Lua extensions developed to be used in the [Sandcat Browser](https://github.com/felipedaragon/sandcat) but that can also be used separately with any application. The project's goal is to make the development of Lua applications easier and to push the boundaries of the Lua language to do innovative things. This will always be a work in progress with new additions and regular updates. Today Selenite is divided into three libraries: `scop` (Core operation functions), `stringop` (string operation functions) and `scl` (core classes).
+Selenite is a multi-purpose set of Lua extensions developed to be used in the [Sandcat Browser](https://github.com/felipedaragon/sandcat) but that can also be used separately with any application. The project's goal is to make the development of Lua applications easier and to push the boundaries of the Lua language to do innovative things. This will always be a work in progress with new additions and regular updates.
 
 For more details about this project, visit [here](http://www.206labs.com/selenite/).
 

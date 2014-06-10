@@ -11,6 +11,7 @@
 * **getcontents** ( filename ): Returns the contents of a local file.
 * **getext** ( filename ): Gets the extension part of a filename.
 * **getname** ( filename ): Gets the name and extension part of a filename.
+* **getver** ( filename ): Gets the version of a binary file.
 
 ### Directory Functions (slx.dir.*)
 
@@ -18,18 +19,24 @@
 * **delete** ( dirname ): Deletes a directory and its subdirectories.
 * **getdirlist** ( dirname ): Returns the list of sub directories of a directory.
 * **getfilelist** ( dirname ): Returns the list of files of a directory.
+* **packtotar** ( dirname, outfilename [, filemask]): Packs a directory to a TAR file.
+* **unpackfromtar** ( tarfilename, outdirname ): Unpacks a TAR file to a directory.
 
 ## String Operations (slx.string.*)
 
 * **after** ( s, sub ): Returns the portion of the string after a specific sub-string.
 * **before** ( s, sub ): Returns the portion of the string before a specific sub-string.
 * **between** ( s, start, stop ): Returns a string between 2 strings.
+* **decrease** ( s [,step] ): Decreases the string characters.
 * **gettoken** ( s, delim, int ): Returns what comes after a delimiter.
+* **increase** ( s [,step] ): Increases the string characters.
 * **lastchar** ( s ): Returns the last character of a string.
 * **occur** ( s, sub ): Returns the count of the occurrence of a particular string or character.
 * **random** ( int ): Returns a random string that is the length of your choosing.
-* **replace** ( s, find, rep ): Replaces a string. 
+* **replace** ( s, find, rep ): Replaces a string.
+* **replacefirst** ( s, find, rep ): Replaces just the first occurrence of a sub string in a string.
 * **stripquotes** ( s ): Returns a string with removed quotes.
+* **stripblanklines** ( s ): Returns a multi-line string without any blank lines.
 * **trim** ( s ): Returns a string without redundant whitespace.
 
 ### String Matching Functions
@@ -57,6 +64,8 @@ These will return a boolean value.
 
 ### HTML Functions (slx.html.*)
 
+* **beautifycss** ( css ): Formats a CSS code.
+* **beautifyjs** ( js ): Formats a JavaScript code.
 * **escape** ( s ): Escapes HTML tag characters.
 * **gettagcontents** ( html, tag ): Extracts the content of HTML tags.
 * **parser**: Returns a HTML parser object (see `classes.htmlparser.md`).
@@ -77,9 +86,11 @@ These will return a boolean value.
 * **decode** ( s ): Decodes an URL.
 * **encode** ( s ): Encodes an URL.
 * **encodefull** ( s ): Full URL Encode.
+* **fileurltofilename** ( fileurl ): Converts a file URL to a proper filename.
 * **genfromhost** ( hostname , port ): Generates an URL from a hostname and a port.
 * **getfileext** ( url ): Returns the extension from an URL filename.
 * **getfilename** ( url ): Returns the URL filename.
+* **gettiny** ( url ): Returns a tiny version of an URL (uses tinyurl.com).
 
 ### JSON Functions (slx.json.*)
 

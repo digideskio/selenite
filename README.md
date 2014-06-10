@@ -6,9 +6,7 @@ Selenite is a multi-purpose set of Lua extensions developed to be used in the [S
 
 ## Usage
 
-To use Selenite, you just need to load the library using `require "Selenite"`. After this you can use any of the library's functions.
-
-For a list of functions, see [here](https://github.com/felipedaragon/selenite/blob/master/docs/functions.md).
+To use Selenite, you just need to load the library using `require "Selenite"`. After this you can use any of the library's functions. For a list of functions, see [here](https://github.com/felipedaragon/selenite/blob/master/docs/functions.md).
 
 ### Classes
 
@@ -16,7 +14,7 @@ All Selenite classes (described in `docs\classes.*`) have a "new" method that mu
 
 ## Download
 
-* [Windows](https://www.wuala.com/syhunt/tools/selenite-1.3.zip) - 32-bit & 64-bit binaries
+* [Windows](http://www.wuala.com/syhunt/tools/selenite-1.4-pre1.zip/) - 32-bit & 64-bit binaries
 
 ## Dependencies
 

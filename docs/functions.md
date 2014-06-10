@@ -44,8 +44,8 @@ These will return a boolean value.
 
 ### String Classes
 
-* **list**: Returns a stringlist object (see `stringlist.md`).
-* **loop**: Returns a stringloop object (see `stringloop.md`).
+* **list**: Returns a stringlist object (see `classes.stringlist.md`).
+* **loop**: Returns a stringloop object (see `classes.stringloop.md`).
 
 ## Regular Expression Functions (slx.re.*)
 
@@ -59,7 +59,7 @@ These will return a boolean value.
 
 * **escape** ( s ): Escapes HTML tag characters.
 * **gettagcontents** ( html, tag ): Extracts the content of HTML tags.
-* **parser**: Returns a HTML parser object (see `htmlparser.md`).
+* **parser**: Returns a HTML parser object (see `classes.htmlparser.md`).
 * **striptags** ( s ): Removes tags from a string.
 * **unescape** ( s ): Unescapes HTML tag characters.
 
@@ -83,7 +83,7 @@ These will return a boolean value.
 
 ### JSON Functions (slx.json.*)
 
-* **object**: Returns a JSON object (see `jsonobject.md`).
+* **object**: Returns a JSON object (see `classes.jsonobject.md`).
 
 ### HTTP Functions (slx.http.*)
 

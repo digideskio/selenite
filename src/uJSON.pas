@@ -9,7 +9,7 @@ unit uJSON;
 interface
 
 uses
-  Classes, SysUtils, Lua, SuperObject, CatStrings, CatLuaObject, CatLuaUtils,
+  Classes, SysUtils, dLua, SuperObject, CatStrings, CatLuaObject, CatLuaUtils,
   Variants, CatJSON;
 
 type
@@ -24,7 +24,6 @@ type
   public
     obj: TCatJSON;
     destructor Destroy; override;
-  published
   end;
 
 procedure RegisterSeleniteJSON(L: PLua_State);
@@ -47,7 +46,7 @@ var
   o: TSeleniteJSON;
 begin
   o := TSeleniteJSON(LuaToTCatLuaObject(L, 1));
-  plua_pushstring(L, o.obj.text);
+  lua_pushstring(L, o.obj.text);
   result := 1;
 end;
 
@@ -56,7 +55,7 @@ var
   o: TSeleniteJSON;
 begin
   o := TSeleniteJSON(LuaToTCatLuaObject(L, 1));
-  plua_pushstring(L, o.obj.TextUnquoted);
+  lua_pushstring(L, o.obj.TextUnquoted);
   result := 1;
 end;
 

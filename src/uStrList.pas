@@ -9,7 +9,7 @@ unit uStrList;
 interface
 
 uses
-  Classes, SysUtils, lua, pLua, LuaObject;
+  Classes, SysUtils, dlua, pLua, LuaObject;
 
 type
   { TSeleniteStrList }

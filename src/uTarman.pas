@@ -9,7 +9,7 @@ unit uTarman;
 interface
 
 uses
-  Lua, SysUtils, Classes;
+  dLua, SysUtils, Classes;
 
 procedure RegisterTarman(L: plua_State);
 function luaopen_Tarman(L: plua_State): integer; cdecl;
@@ -69,7 +69,7 @@ begin
   begin
     // writeln('file:'+directory+slp.current);
     // writeln('tarfile:'+slp.current);
-    tw.AddFile(slp.Current, after(slp.Current, directory));
+    tw.AddFile(slp.Current, ansistring(after(slp.Current, directory)));
   end;
   // TW.AddFile('Readme.htm','Test\Test.txt');
   tw.Free;
@@ -88,8 +88,8 @@ begin
   while ta.FindNext(DirRec) do
   begin
     // writeln(extractfilepath(directory+DirRec.Name));
-    forcedir(ExtractFilePath(directory + replacestr(DirRec.Name, '/', '\')));
-    ta.ReadFile(directory + DirRec.Name);
+    forcedir(ExtractFilePath(directory + replacestr(string(DirRec.Name), '/', '\')));
+    ta.ReadFile(directory + string(DirRec.Name));
     // writeln(directory+DirRec.Name)
   end;
   ta.Free;

@@ -15,7 +15,7 @@ uses
 {$ELSE}
   Windows, Classes, SysUtils, ShellAPI, Registry,
 {$IFEND}
-  Lua;
+  dLua;
 
 function str_beginswith(L: plua_State): integer; cdecl;
 function str_endswith(L: plua_State): integer; cdecl;
@@ -106,7 +106,7 @@ function utils_hassoftwareinstalled(L: plua_State): integer; cdecl;
 implementation
 
 uses
-  pLua, ExtPascalUtils, synacode,
+  ExtPascalUtils, synacode,
   uStrList, uStrListParser, uHTMLParser, uJSON, uTarman,
   CatStrings, CatLuaUtils, CatJSON, CatRegex, CatFiles, CatHTTP, CatUtils,
   CatInet, CatTasks;
@@ -125,13 +125,13 @@ end;
 
 function str_regexfind(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, RegExpFind(lua_tostring(L, 1), lua_tostring(L, 2)));
+  lua_pushstring(L, RegExpFind(lua_tostring(L, 1), lua_tostring(L, 2)));
   result := 1;
 end;
 
 function str_regexreplace(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, RegExpReplace(lua_tostring(L, 1), lua_tostring(L, 2),
+  lua_pushstring(L, RegExpReplace(lua_tostring(L, 1), lua_tostring(L, 2),
     lua_tostring(L, 3)));
   result := 1;
 end;
@@ -147,82 +147,82 @@ end;
 
 function str_base64enc(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, Base64Encode(lua_tostring(L, 1)));
+  lua_pushstring(L, Base64Encode(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function str_base64dec(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, Base64Decode(lua_tostring(L, 1)));
+  lua_pushstring(L, Base64Decode(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function str_trim(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, trim(lua_tostring(L, 1)));
+  lua_pushstring(L, trim(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function str_after(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, after(lua_tostring(L, 1), lua_tostring(L, 2)));
+  lua_pushstring(L, after(lua_tostring(L, 1), lua_tostring(L, 2)));
   result := 1;
 end;
 
 function str_before(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, before(lua_tostring(L, 1), lua_tostring(L, 2)));
+  lua_pushstring(L, before(lua_tostring(L, 1), lua_tostring(L, 2)));
   result := 1;
 end;
 
 function str_random(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, RandomString(lua_tointeger(L, 1)));
+  lua_pushstring(L, RandomString(lua_tointeger(L, 1)));
   result := 1;
 end;
 
 function str_lastchar(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, lastchar(lua_tostring(L, 1)));
+  lua_pushstring(L, lastchar(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function str_extracttagcontent(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, extractfromtag(lua_tostring(L, 1), lua_tostring(L, 2)));
+  lua_pushstring(L, extractfromtag(lua_tostring(L, 1), lua_tostring(L, 2)));
   result := 1;
 end;
 
 function file_gettostr(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, getfiletostr(lua_tostring(L, 1)));
+  lua_pushstring(L, getfiletostr(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function str_gettoken(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, gettoken(lua_tostring(L, 1), lua_tostring(L, 2),
+  lua_pushstring(L, gettoken(lua_tostring(L, 1), lua_tostring(L, 2),
     lua_tointeger(L, 3)));
   result := 1;
 end;
 
 function str_replace(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, replacestr(lua_tostring(L, 1), lua_tostring(L, 2),
+  lua_pushstring(L, replacestr(lua_tostring(L, 1), lua_tostring(L, 2),
     lua_tostring(L, 3)));
   result := 1;
 end;
 
 function str_replace_first(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, stringreplace(lua_tostring(L, 1), lua_tostring(L, 2),
+  lua_pushstring(L, stringreplace(lua_tostring(L, 1), lua_tostring(L, 2),
     lua_tostring(L, 3), []));
   result := 1;
 end;
 
 function str_between(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, ExtractFromString(lua_tostring(L, 1), lua_tostring(L, 2),
+  lua_pushstring(L, ExtractFromString(lua_tostring(L, 1), lua_tostring(L, 2),
     lua_tostring(L, 3)));
   result := 1;
 end;
@@ -250,7 +250,7 @@ end;
 
 function url_getfilename(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, ExtractUrlFileName(lua_tostring(L, 1)));
+  lua_pushstring(L, ExtractUrlFileName(lua_tostring(L, 1)));
   result := 1;
 end;
 
@@ -267,31 +267,31 @@ begin
         ext := after(ext, '.');
     end;
   end;
-  plua_pushstring(L, ext);
+  lua_pushstring(L, ext);
   result := 1;
 end;
 
 function html_escape(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, CatHTTP.htmlescape(lua_tostring(L, 1)));
+  lua_pushstring(L, CatHTTP.htmlescape(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function html_unescape(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, CatHTTP.htmlunescape(lua_tostring(L, 1)));
+  lua_pushstring(L, CatHTTP.htmlunescape(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function html_striptags(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, StripHtml(lua_tostring(L, 1)));
+  lua_pushstring(L, StripHtml(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function str_stripquotes(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, RemoveQuotes(lua_tostring(L, 1)));
+  lua_pushstring(L, RemoveQuotes(lua_tostring(L, 1)));
   result := 1;
 end;
 
@@ -305,43 +305,43 @@ begin
   StripBlankLines(sl);
   s := sl.text;
   sl.Free;
-  plua_pushstring(L, s);
+  lua_pushstring(L, s);
   result := 1;
 end;
 
 function url_encode(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, URLencode(lua_tostring(L, 1), lua_toboolean(L, 2)));
+  lua_pushstring(L, URLencode(lua_tostring(L, 1), lua_toboolean(L, 2)));
   result := 1;
 end;
 
 function url_encodefull(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, URLencodefull(lua_tostring(L, 1)));
+  lua_pushstring(L, URLencodefull(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function url_decode(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, URLDecode(lua_tostring(L, 1)));
+  lua_pushstring(L, URLDecode(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function url_gethost(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, ExtractUrlHost(lua_tostring(L, 1)));
+  lua_pushstring(L, ExtractUrlHost(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function url_getpath(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, ExtractUrlPath(lua_tostring(L, 1)));
+  lua_pushstring(L, ExtractUrlPath(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function url_combine(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, getabsoluteurl(lua_tostring(L, 1), lua_tostring(L, 2)));
+  lua_pushstring(L, getabsoluteurl(lua_tostring(L, 1), lua_tostring(L, 2)));
   result := 1;
 end;
 
@@ -353,19 +353,19 @@ end;
 
 function net_iptoname(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, IPAddrToName(lua_tostring(L, 1)));
+  lua_pushstring(L, IPAddrToName(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function net_nametoip(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, NameToIPAddr(lua_tostring(L, 1)));
+  lua_pushstring(L, NameToIPAddr(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function conv_inttohex(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, IntToHex(lua_tointeger(L, 1), 1));
+  lua_pushstring(L, IntToHex(lua_tointeger(L, 1), 1));
   result := 1;
 end;
 
@@ -401,29 +401,32 @@ end;
 
 function str_toalphanum(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, StrToAlphaNum(lua_tostring(L, 1)));
+  lua_pushstring(L, StrToAlphaNum(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function conv_hextostr(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, HexToStr(lua_tostring(L, 1)));
+  lua_pushstring(L, HexToStr(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function conv_strtohex(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, StrToHex(lua_tostring(L, 1)));
+  lua_pushstring(L, StrToHex(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function conv_strtomd5(L: plua_State): integer; cdecl;
+var s:string;
 begin
-  plua_pushstring(L, MD5hash(lua_tostring(L, 1)));
+  s:=string(MD5hash(UTF8string(lua_tostring(L, 1))));
+  lua_pushstring(L, s);
   result := 1;
 end;
 
 function conv_strtosha1(L: plua_State): integer; cdecl;
+var s:string;
   function StrToHex(const Value: AnsiString): string;
   var
     n: integer;
@@ -434,25 +437,27 @@ function conv_strtosha1(L: plua_State): integer; cdecl;
   end;
 
 begin
-  plua_pushstring(L, lowercase(StrToHex(SHA1(lua_tostring(L, 1)))));
+  s:= string(SHA1(ansistring(lua_tostring(L, 1))));
+  s:= lowercase(StrToHex(ansistring(s)));
+  lua_pushstring(L, s);
   result := 1;
 end;
 
 function conv_strtocommatext(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, StrToCommaText(lua_tostring(L, 1)));
+  lua_pushstring(L, StrToCommaText(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function conv_commatexttostr(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, CommaTextToStr(lua_tostring(L, 1)));
+  lua_pushstring(L, CommaTextToStr(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function file_getversion(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, GetFileVersion(lua_tostring(L, 1)));
+  lua_pushstring(L, GetFileVersion(lua_tostring(L, 1)));
   result := 1;
 end;
 
@@ -471,7 +476,7 @@ var
 
 begin
   d := getdirfiles(lua_tostring(L, 1));
-  plua_pushstring(L, d);
+  lua_pushstring(L, d);
   result := 1;
 end;
 
@@ -505,19 +510,19 @@ var
   d: string;
 begin
   d := GetDirs(lua_tostring(L, 1));
-  plua_pushstring(L, d);
+  lua_pushstring(L, d);
   result := 1;
 end;
 
 function file_extractname(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, extractfilename(lua_tostring(L, 1)));
+  lua_pushstring(L, extractfilename(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function file_getext(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, extractfileext(lua_tostring(L, 1)));
+  lua_pushstring(L, extractfileext(lua_tostring(L, 1)));
   result := 1;
 end;
 
@@ -587,13 +592,13 @@ end;
 
 function file_fileurltofilename(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, FileUrlToFilename(lua_tostring(L, 1)));
+  lua_pushstring(L, FileUrlToFilename(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function hostporttourl(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, generateurl(lua_tostring(L, 1), lua_tointeger(L, 2)));
+  lua_pushstring(L, generateurl(lua_tostring(L, 1), lua_tointeger(L, 2)));
   result := 1;
 end;
 
@@ -611,7 +616,7 @@ end;
 
 function http_postdatatojson(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, postdatatojson(lua_tostring(L, 1)));
+  lua_pushstring(L, postdatatojson(lua_tostring(L, 1)));
   result := 1;
 end;
 
@@ -621,7 +626,7 @@ var
 begin
   s := getfield(lua_tostring(L, 2), lua_tostring(L, 1));
   s := trim(s);
-  plua_pushstring(L, s);
+  lua_pushstring(L, s);
   result := 1;
 end;
 
@@ -634,7 +639,7 @@ begin
   if lua_isnone(L, 2) = false then
     step := lua_tointeger(L, 2);
   s := strincrease(lua_tostring(L, 1), step);
-  plua_pushstring(L, s);
+  lua_pushstring(L, s);
   result := 1;
 end;
 
@@ -647,7 +652,7 @@ begin
     s := gettinyurl(s);
   except
   end;
-  plua_pushstring(L, s);
+  lua_pushstring(L, s);
   result := 1;
 end;
 
@@ -660,13 +665,13 @@ begin
   if lua_isnone(L, 2) = false then
     step := lua_tointeger(L, 2);
   s := strdecrease(lua_tostring(L, 1), step);
-  plua_pushstring(L, s);
+  lua_pushstring(L, s);
   result := 1;
 end;
 
 function url_changepath(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, ChangeUrlPath(lua_tostring(L, 1), lua_tostring(L, 2)));
+  lua_pushstring(L, ChangeUrlPath(lua_tostring(L, 1), lua_tostring(L, 2)));
   result := 1;
 end;
 
@@ -678,13 +683,13 @@ end;
 
 function str_beautifyjs(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, BeautifyJS(lua_tostring(L, 1)));
+  lua_pushstring(L, BeautifyJS(lua_tostring(L, 1)));
   result := 1;
 end;
 
 function str_beautifycss(L: plua_State): integer; cdecl;
 begin
-  plua_pushstring(L, BeautifyCSS(lua_tostring(L, 1)));
+  lua_pushstring(L, BeautifyCSS(lua_tostring(L, 1)));
   result := 1;
 end;
 

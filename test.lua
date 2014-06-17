@@ -88,6 +88,10 @@ function runtests()
   test('url.crack (port)', 80, urlparts.port)
   test('url.crack (proto)', 'http', urlparts.proto)
   
+  -- Net functions
+  test('net.iptoname', 'localhost', slx.net.iptoname('127.0.0.1'))
+  test('net.nametoip', '127.0.0.1', slx.net.nametoip('localhost'))
+  
   -- HTTP functions
   local req = [[GET /index.php HTTP/1.1
 Host: www.example.org

@@ -17,8 +17,8 @@ type
   private
     constructor Create(LuaState: PLua_State;
       AParent: TLuaObject = nil); overload;
-    function GetPropValue(propName: AnsiString): Variant; override;
-    function SetPropValue(propName: AnsiString; const AValue: Variant)
+    function GetPropValue(propName: String): Variant; override;
+    function SetPropValue(propName: String; const AValue: Variant)
       : Boolean; override;
   public
     obj: TStringLoop;
@@ -170,7 +170,7 @@ begin
   obj := TStringLoop.Create;
 end;
 
-function TSeleniteStrListParser.GetPropValue(propName: AnsiString): Variant;
+function TSeleniteStrListParser.GetPropValue(propName: String): Variant;
 begin
   if CompareText(propName, 'commatext') = 0 then
     result := obj.List.CommaText
@@ -186,21 +186,21 @@ begin
     result := inherited GetPropValue(propName);
 end;
 
-function TSeleniteStrListParser.SetPropValue(propName: AnsiString;
+function TSeleniteStrListParser.SetPropValue(propName: String;
   const AValue: Variant): Boolean;
 begin
   result := true;
   if CompareText(propName, 'commatext') = 0 then
   begin
-    obj.List.CommaText := AnsiString(AValue);
+    obj.List.CommaText := AValue;
     obj.reset;
   end
   else if CompareText(propName, 'current') = 0 then
-    obj.Current := AnsiString(AValue)
+    obj.Current := AValue
   else if CompareText(propName, 'iscsv') = 0 then
     obj.iscsv := AValue
   else if CompareText(propName, 'text') = 0 then
-    obj.loadfromstring(AnsiString(AValue))
+    obj.loadfromstring(AValue)
   else
     result := inherited SetPropValue(propName, AValue);
 end;

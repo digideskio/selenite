@@ -17,8 +17,8 @@ type
   private
     constructor Create(LuaState: PLua_State;
       AParent: TLuaObject = nil); overload;
-    function GetPropValue(propName: AnsiString): Variant; override;
-    function SetPropValue(propName: AnsiString; const AValue: Variant)
+    function GetPropValue(propName: String): Variant; override;
+    function SetPropValue(propName: String; const AValue: Variant)
       : Boolean; override;
   public
     obj: TCatHTMLParser;
@@ -133,7 +133,7 @@ begin
   obj := TCatHTMLParser.Create;
 end;
 
-function TSeleniteHTMLParser.GetPropValue(propName: AnsiString): Variant;
+function TSeleniteHTMLParser.GetPropValue(propName: String): Variant;
 begin
   if CompareText(propName, 'pos') = 0 then
     result := obj.Pos
@@ -149,14 +149,14 @@ begin
     result := inherited GetPropValue(propName);
 end;
 
-function TSeleniteHTMLParser.SetPropValue(propName: AnsiString;
+function TSeleniteHTMLParser.SetPropValue(propName: String;
   const AValue: Variant): Boolean;
 begin
   result := true; // 2013
   if CompareText(propName, 'tagcontent') = 0 then
-    obj.TextBetween := AnsiString(AValue)
+    obj.TextBetween := AValue
   else if CompareText(propName, 'tagname') = 0 then
-    obj.tag.Name := AnsiString(AValue)
+    obj.tag.Name := AValue
   else
     result := inherited SetPropValue(propName, AValue);
 end;

@@ -181,7 +181,7 @@ const
  'slx.string.loop = sel_listparser'+crlf+
  'slx.string.list = sel_stringlist'+crlf+
  'slx.json.object = sel_json';
- procedure AddTable(L:plua_State;name:pansichar;table:plual_reg);
+ procedure AddTable(L:plua_State;name:string;table:plual_reg);
  begin
   lua_newtable(L);
   lual_register(L,nil,table);
@@ -207,8 +207,7 @@ begin
  RegisterSeleniteStrListParser(L);
  RegisterSeleniteHTMLParser(L);
  RegisterSeleniteJSON(L);
- luaL_loadbuffer(L, pAnsiChar(init), Length(init), pAnsiChar(emptystr));
- lua_pcall(L, 0, 0, 0);
+ plua_dostring(L, init);
  Result := 0;
 end;
 

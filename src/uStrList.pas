@@ -17,8 +17,8 @@ type
   private
     constructor Create(LuaState: PLua_State;
       AParent: TLuaObject = nil); overload;
-    function GetPropValue(propName: AnsiString): Variant; override;
-    function SetPropValue(propName: AnsiString; const AValue: Variant)
+    function GetPropValue(propName: String): Variant; override;
+    function SetPropValue(propName: String; const AValue: Variant)
       : Boolean; override;
   public
     obj: TStringList;
@@ -147,7 +147,7 @@ begin
   obj := TStringList.Create;
 end;
 
-function TSeleniteStrList.GetPropValue(propName: AnsiString): Variant;
+function TSeleniteStrList.GetPropValue(propName: String): Variant;
 begin
   if CompareText(propName, 'count') = 0 then
     result := obj.Count
@@ -157,12 +157,12 @@ begin
     result := inherited GetPropValue(propName);
 end;
 
-function TSeleniteStrList.SetPropValue(propName: AnsiString;
+function TSeleniteStrList.SetPropValue(propName: String;
   const AValue: Variant): Boolean;
 begin
   result := true;
   if CompareText(propName, 'text') = 0 then
-    obj.Text := AnsiString(AValue)
+    obj.Text := AValue
   else
     result := inherited SetPropValue(propName, AValue);
 end;

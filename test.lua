@@ -128,6 +128,20 @@ Server: Apache/1.3.3.7 (Unix) (Red-Hat/Linux)]]
   -- Task functions
   test('task.isrunning (explorer)', true,slx.task.isrunning('explorer.exe'))
   test('task.isrunning (invalid)', false,slx.task.isrunning('invalid.exe'))
+  
+  -- JSON object
+  local j1 = slx.json.object:new()
+  local j2 = slx.json.object:new()
+  j1.test = 'test'
+  j2.name = 'somestring'
+  j2.status = true
+  j2.year = 2014
+  test('json.object 1 (string)', 'test',j1.test)
+  test('json.object 2 (string)', 'somestring',j2.name)
+  test('json.object 2 (boolean)', true, j2.status)
+  test('json.object 2 (integer)', 2014, j2.year)
+  j1:release()
+  j2:release()
 end
 
 function printresults()

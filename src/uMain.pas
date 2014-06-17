@@ -22,7 +22,7 @@ implementation
 
 uses
   pLua, uFunctions, uStrList, uStrListParser, uHTMLParser, uJSON,
-  uTarman, CatStrings, CatLuaUtils;
+  uTarman, CatStrings;
 
 function RegisterSelenite(L: plua_State):integer; cdecl;
 const

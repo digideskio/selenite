@@ -9,18 +9,17 @@ unit uJSON;
 interface
 
 uses
-  Classes, SysUtils, Lua, SuperObject, CatStrings, CatLuaObject, CatLuaUtils,
+  Classes, SysUtils, Lua, LuaObject, SuperObject, CatStrings, CatLuaUtils,
   Variants, CatJSON;
 
 type
-  TSeleniteJSON = class(TCatLuaObject)
+  TSeleniteJSON = class(TLuaObject)
   private
     constructor Create(LuaState: PLua_State;
-      AParent: TCatLuaObject = nil); overload;
-    function GetPropValue(L: PLua_State; propName: AnsiString)
-      : Variant; override;
-    function SetPropValue(L: PLua_State; propName: AnsiString;
-      const AValue: Variant): Boolean; override;
+      AParent: TLuaObject = nil); overload;
+    function GetPropValue(propName: String): Variant; override;
+    function SetPropValue(propName: String; const AValue: Variant)
+      : Boolean; override;
   public
     obj: TCatJSON;
     destructor Destroy; override;
@@ -36,7 +35,7 @@ function method_settext(L: PLua_State): Integer; cdecl;
 var
   o: TSeleniteJSON;
 begin
-  o := TSeleniteJSON(LuaToTCatLuaObject(L, 1));
+  o := TSeleniteJSON(LuaToTLuaObject(L, 1));
   o.obj.text := lua_tostring(L, 2);
   result := 1;
 end;
@@ -45,7 +44,7 @@ function method_gettext(L: PLua_State): Integer; cdecl;
 var
   o: TSeleniteJSON;
 begin
-  o := TSeleniteJSON(LuaToTCatLuaObject(L, 1));
+  o := TSeleniteJSON(LuaToTLuaObject(L, 1));
   lua_pushstring(L, o.obj.text);
   result := 1;
 end;
@@ -54,7 +53,7 @@ function method_gettext_withunquotedkeys(L: PLua_State): Integer; cdecl;
 var
   o: TSeleniteJSON;
 begin
-  o := TSeleniteJSON(LuaToTCatLuaObject(L, 1));
+  o := TSeleniteJSON(LuaToTLuaObject(L, 1));
   lua_pushstring(L, o.obj.TextUnquoted);
   result := 1;
 end;
@@ -70,25 +69,23 @@ const
       classTable);
     RegisterMethod(L, 'load', @method_settext, classTable);
   end;
-  function new_callback(L: PLua_State; AParent: TCatLuaObject = nil)
-    : TCatLuaObject;
+  function new_callback(L: PLua_State; AParent: TLuaObject = nil): TLuaObject;
   begin
     result := TSeleniteJSON.Create(L, AParent);
   end;
   function Create(L: PLua_State): Integer; cdecl;
   var
-    p: TCatLuaObjectNewCallback;
+    p: TLuaObjectNewCallback;
   begin
     p := @new_callback;
     result := new_LuaObject(L, cObjectName, p);
   end;
 
 begin
-  RegisterTCatLuaObject(L, cObjectName, @Create, @register_methods);
+  RegisterTLuaObject(L, cObjectName, @Create, @register_methods);
 end;
 
-constructor TSeleniteJSON.Create(LuaState: PLua_State;
-  AParent: TCatLuaObject);
+constructor TSeleniteJSON.Create(LuaState: PLua_State; AParent: TLuaObject);
 begin
   inherited Create(LuaState, AParent);
   obj := TCatJSON.Create;
@@ -100,8 +97,7 @@ begin
   inherited Destroy;
 end;
 
-function TSeleniteJSON.GetPropValue(L: PLua_State;
-  propName: AnsiString): Variant;
+function TSeleniteJSON.GetPropValue(propName: String): Variant;
 begin
   if obj.sobject.o[propName] <> nil then
   begin
@@ -119,11 +115,9 @@ begin
       // stObject,stArray, stMethod:
     end;
   end;
-  // result:=obj[propname];
-  // Result:=inherited GetPropValue(propName);
 end;
 
-function TSeleniteJSON.SetPropValue(L: PLua_State; propName: AnsiString;
+function TSeleniteJSON.SetPropValue(propName: String;
   const AValue: Variant): Boolean;
 var
   ltype: Integer;
@@ -145,7 +139,6 @@ begin
   else
     obj[propName] := AValue;
   end;
-  // Result:=inherited SetPropValue(propName, AValue);
 end;
 
 end.

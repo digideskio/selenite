@@ -15,7 +15,7 @@ uses
 {$ELSE}
   Windows, Classes, SysUtils, ShellAPI, Registry,
 {$IFEND}
-  dLua;
+  Lua;
 
 function str_beginswith(L: plua_State): integer; cdecl;
 function str_endswith(L: plua_State): integer; cdecl;

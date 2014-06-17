@@ -9,7 +9,7 @@ unit uJSON;
 interface
 
 uses
-  Classes, SysUtils, dLua, SuperObject, CatStrings, CatLuaObject, CatLuaUtils,
+  Classes, SysUtils, Lua, SuperObject, CatStrings, CatLuaObject, CatLuaUtils,
   Variants, CatJSON;
 
 type
@@ -132,7 +132,7 @@ begin
   ltype := lua_type(L, 3);
   case ltype of
     LUA_TSTRING:
-      obj.sobject.s[propName] := pAnsiChar(lua_tostring(L, 3));
+      obj.sobject.s[propName] := lua_tostring(L, 3);
     LUA_TBOOLEAN:
       obj.sobject.b[propName] := lua_toboolean(L, 3);
     LUA_TNUMBER:

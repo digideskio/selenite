@@ -23,7 +23,6 @@ type
   public
     obj: TStringLoop;
     destructor Destroy; override;
-  published
   end;
 
 procedure RegisterSeleniteStrListParser(L: PLua_State);

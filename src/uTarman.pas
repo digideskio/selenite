@@ -9,7 +9,7 @@ unit uTarman;
 interface
 
 uses
-  dLua, SysUtils, Classes;
+  Lua, SysUtils, Classes;
 
 procedure RegisterTarman(L: plua_State);
 function luaopen_Tarman(L: plua_State): integer; cdecl;

@@ -9,7 +9,7 @@ unit uHTMLParser;
 interface
 
 uses
-  Classes, SysUtils, dLua, LuaObject, CatHTMLParser;
+  Classes, SysUtils, Lua, LuaObject, CatHTMLParser;
 
 type
   { TSeleniteHTMLParser }

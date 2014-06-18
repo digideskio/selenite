@@ -15,15 +15,14 @@ type
   { TSeleniteStrList }
   TSeleniteStrList = class(TLuaObject)
   private
+  public
+    obj: TStringList;
     constructor Create(LuaState: PLua_State;
-      AParent: TLuaObject = nil); overload;
+      AParent: TLuaObject = nil); overload; override;
     function GetPropValue(propName: String): Variant; override;
     function SetPropValue(propName: String; const AValue: Variant)
       : Boolean; override;
-  public
-    obj: TStringList;
     destructor Destroy; override;
-  published
   end;
 
 procedure RegisterSeleniteStrList(L: PLua_State);
@@ -107,7 +106,7 @@ var
   ht: TSeleniteStrList;
 begin
   ht := TSeleniteStrList(LuaToTLuaObject(L, 1));
-  plua_pushstring(L, ht.obj.values[lua_tostring(L, 2)]);
+  lua_pushstring(L, ht.obj.values[lua_tostring(L, 2)]);
   result := 1;
 end;
 

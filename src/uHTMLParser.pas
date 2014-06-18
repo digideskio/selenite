@@ -15,13 +15,13 @@ type
   { TSeleniteHTMLParser }
   TSeleniteHTMLParser = class(TLuaObject)
   private
+  public
+    obj: TCatHTMLParser;
     constructor Create(LuaState: PLua_State;
-      AParent: TLuaObject = nil); overload;
+      AParent: TLuaObject = nil); overload; override;
     function GetPropValue(propName: String): Variant; override;
     function SetPropValue(propName: String; const AValue: Variant)
       : Boolean; override;
-  public
-    obj: TCatHTMLParser;
     destructor Destroy; override;
   end;
 
@@ -75,7 +75,7 @@ begin
   ht := TSeleniteHTMLParser(LuaToTLuaObject(L, 1));
   s := ht.obj.tag.params.values[lua_tostring(L, 2)];
   s := removequotes(s);
-  plua_pushstring(L, s);
+  lua_pushstring(L, s);
   result := 1;
 end;
 

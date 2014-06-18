@@ -15,13 +15,13 @@ type
   { TSeleniteStrListParser }
   TSeleniteStrListParser = class(TLuaObject)
   private
+  public
+    obj: TStringLoop;
     constructor Create(LuaState: PLua_State;
-      AParent: TLuaObject = nil); overload;
+      AParent: TLuaObject = nil); overload; override;
     function GetPropValue(propName: String): Variant; override;
     function SetPropValue(propName: String; const AValue: Variant)
       : Boolean; override;
-  public
-    obj: TStringLoop;
     destructor Destroy; override;
   end;
 
@@ -117,7 +117,7 @@ var
   ht: TSeleniteStrListParser;
 begin
   ht := TSeleniteStrListParser(LuaToTLuaObject(L, 1));
-  plua_pushstring(L, ht.obj.getvalue(lua_tostring(L, 2)));
+  lua_pushstring(L, ht.obj.getvalue(lua_tostring(L, 2)));
   result := 1;
 end;
 

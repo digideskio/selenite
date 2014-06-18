@@ -15,13 +15,13 @@ uses
 type
   TSeleniteJSON = class(TLuaObject)
   private
-    constructor Create(LuaState: PLua_State;
-      AParent: TLuaObject = nil); overload;
+  public
+    obj: TCatJSON;
     function GetPropValue(propName: String): Variant; override;
     function SetPropValue(propName: String; const AValue: Variant)
       : Boolean; override;
-  public
-    obj: TCatJSON;
+    constructor Create(LuaState: PLua_State;
+      AParent: TLuaObject = nil); overload; override;
     destructor Destroy; override;
   end;
 

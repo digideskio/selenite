@@ -106,9 +106,9 @@ function utils_hassoftwareinstalled(L: plua_State): integer; cdecl;
 implementation
 
 uses
-  ExtPascalUtils, synacode,
+  ExtPascalUtils, synacode, pLua,
   uStrList, uStrListParser, uHTMLParser, uJSON, uTarman,
-  CatStrings, CatLuaUtils, CatJSON, CatRegex, CatFiles, CatHTTP, CatUtils,
+  CatStrings, CatJSON, CatRegex, CatFiles, CatHTTP, CatUtils,
   CatInet, CatTasks;
 
 function str_beginswith(L: plua_State): integer; cdecl;
@@ -239,12 +239,12 @@ var
 begin
   lua_newtable(L);
   url := CrackURL(lua_tostring(L, 1));
-  pLua_SetFieldStr(L, 'fileext', url.fileext);
-  pLua_SetFieldStr(L, 'filename', url.filename);
-  pLua_SetFieldStr(L, 'host', url.host);
-  pLua_SetFieldStr(L, 'path', url.path);
-  pLua_SetFieldInt(L, 'port', url.port);
-  pLua_SetFieldStr(L, 'proto', url.protocol);
+  plua_SetFieldValue(L, 'fileext', url.fileext);
+  plua_SetFieldValue(L, 'filename', url.filename);
+  plua_SetFieldValue(L, 'host', url.host);
+  plua_SetFieldValue(L, 'path', url.path);
+  plua_SetFieldValue(L, 'port', url.port);
+  plua_SetFieldValue(L, 'proto', url.protocol);
   result := 1;
 end;
 
@@ -608,9 +608,9 @@ var
 begin
   lua_newtable(L);
   request := CrackHTTPRequest(lua_tostring(L, 1));
-  pLua_SetFieldStr(L, 'method', request.method);
-  pLua_SetFieldStr(L, 'path', request.path);
-  pLua_SetFieldStr(L, 'data', request.Data);
+  plua_SetFieldValue(L, 'method', request.method);
+  plua_SetFieldValue(L, 'path', request.path);
+  plua_SetFieldValue(L, 'data', request.Data);
   result := 1;
 end;
 

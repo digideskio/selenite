@@ -9,8 +9,8 @@ unit uJSON;
 interface
 
 uses
-  Classes, SysUtils, Lua, LuaObject, SuperObject, CatStrings, CatLuaUtils,
-  Variants, CatJSON;
+  Classes, SysUtils, Lua, LuaObject, SuperObject, CatStrings, Variants,
+  CatJSON;
 
 type
   TSeleniteJSON = class(TLuaObject)

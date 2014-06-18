@@ -152,10 +152,6 @@ const
  (name:'getfileext';func:url_getfileext),
  (name:'getfilename';func:url_getfilename),
  (name:'gettiny';func:url_gettiny),
-// replaced by url_crack
-// (name:'gethost';func:url_gethost),
-// (name:'getpath';func:url_getpath),
-// (name:'getport';func:url_getport),
  (name:nil;func:nil)
  );
  net_table : array[1..3] of luaL_reg =

@@ -106,7 +106,7 @@ function utils_hassoftwareinstalled(L: plua_State): integer; cdecl;
 implementation
 
 uses
-  ExtPascalUtils, synacode, pLua,
+  ExtPascalUtils, synacode, pLua, pLuaTable,
   uStrList, uStrListParser, uHTMLParser, uJSON, uTarman,
   CatStrings, CatJSON, CatRegex, CatFiles, CatHTTP, CatUtils,
   CatInet, CatTasks;

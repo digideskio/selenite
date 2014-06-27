@@ -21,7 +21,7 @@ function RegisterSelenite(L: plua_State):integer; cdecl;
 implementation
 
 uses
-  pLua, uFunctions, uStrList, uStrListParser, uHTMLParser, uJSON,
+  pLua, pLuaTable, uFunctions, uStrList, uStrListParser, uHTMLParser, uJSON,
   uTarman, CatStrings;
 
 function RegisterSelenite(L: plua_State):integer; cdecl;
@@ -177,28 +177,22 @@ const
  'slx.string.loop = sel_listparser'+crlf+
  'slx.string.list = sel_stringlist'+crlf+
  'slx.json.object = sel_json';
- procedure AddTable(L:plua_State;name:string;table:plual_reg);
- begin
-  lua_newtable(L);
-  lual_register(L,nil,table);
-  lua_setfield(L, -2,name);
- end;
 begin
  lual_register(L,'slx',@coreop_table);
- AddTable(L,'base64',@base64_table);
- AddTable(L,'convert',@convert_table);
- AddTable(L,'crypto',@crypto_table);
- AddTable(L,'dir',@dir_table);
- AddTable(L,'file',@file_table);
- AddTable(L,'html',@html_table);
- AddTable(L,'http',@http_table);
- AddTable(L,'json',@json_table);
- AddTable(L,'net',@net_table);
- AddTable(L,'string',@string_table);
- AddTable(L,'task',@task_table);
- AddTable(L,'url',@url_table);
- AddTable(L,'utils',@utils_table);
- AddTable(L,'re',@regex_table);
+ plua_SetFieldValue(L,'base64',@base64_table);
+ plua_SetFieldValue(L,'convert',@convert_table);
+ plua_SetFieldValue(L,'crypto',@crypto_table);
+ plua_SetFieldValue(L,'dir',@dir_table);
+ plua_SetFieldValue(L,'file',@file_table);
+ plua_SetFieldValue(L,'html',@html_table);
+ plua_SetFieldValue(L,'http',@http_table);
+ plua_SetFieldValue(L,'json',@json_table);
+ plua_SetFieldValue(L,'net',@net_table);
+ plua_SetFieldValue(L,'string',@string_table);
+ plua_SetFieldValue(L,'task',@task_table);
+ plua_SetFieldValue(L,'url',@url_table);
+ plua_SetFieldValue(L,'utils',@utils_table);
+ plua_SetFieldValue(L,'re',@regex_table);
  RegisterSeleniteStrList(L);
  RegisterSeleniteStrListParser(L);
  RegisterSeleniteHTMLParser(L);

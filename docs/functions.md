@@ -1,6 +1,6 @@
 ## File System Functions
 
-### File Functions (slx.file.*)
+### File Functions (file.*)
 
 * **canopen** ( filename ): Returns true if a file can be opened. If the file is locked, returns false.
 * **copy** ( source, dest ): Copies a file to a new file.
@@ -13,7 +13,7 @@
 * **getname** ( filename ): Gets the name and extension part of a filename.
 * **getver** ( filename ): Gets the version of a binary file.
 
-### Directory Functions (slx.dir.*)
+### Directory Functions (dir.*)
 
 * **create** ( dirname ): Recursively creates a directory.
 * **delete** ( dirname ): Deletes a directory and its subdirectories.
@@ -22,7 +22,7 @@
 * **packtotar** ( dirname, outfilename [, filemask]): Packs a directory to a TAR file.
 * **unpackfromtar** ( tarfilename, outdirname ): Unpacks a TAR file to a directory.
 
-## String Operations (slx.string.*)
+## String Operations (string.*)
 
 * **after** ( s, sub ): Returns the portion of the string after a specific sub-string.
 * **before** ( s, sub ): Returns the portion of the string before a specific sub-string.
@@ -54,7 +54,7 @@ These will return a boolean value.
 * **list**: Returns a stringlist object (see `classes.stringlist.md`).
 * **loop**: Returns a stringloop object (see `classes.stringloop.md`).
 
-## Regular Expression Functions (slx.re.*)
+## Regular Expression Functions (re.*)
 
 * **find** ( s, regex): Regular expression finder. Returns a string.
 * **match** ( s, regex): Returns true if it matches a regular expression, false otherwise.
@@ -62,7 +62,7 @@ These will return a boolean value.
 
 ## Web Functions
 
-### HTML Functions (slx.html.*)
+### HTML Functions (html.*)
 
 * **beautifycss** ( css ): Formats a CSS code.
 * **beautifyjs** ( js ): Formats a JavaScript code.
@@ -72,7 +72,7 @@ These will return a boolean value.
 * **striptags** ( s ): Removes tags from a string.
 * **unescape** ( s ): Unescapes HTML tag characters.
 
-### URL Functions (slx.url.*)
+### URL Functions (url.*)
 
 * **changepath** ( url, newpath ): Changes the path of an URL.
 * **combine** ( url, path ): Combines a path to a URL.
@@ -92,11 +92,11 @@ These will return a boolean value.
 * **getfilename** ( url ): Returns the URL filename.
 * **gettiny** ( url ): Returns a tiny version of an URL (uses tinyurl.com).
 
-### JSON Functions (slx.json.*)
+### JSON Functions (json.*)
 
 * **object**: Returns a JSON object (see `classes.jsonobject.md`).
 
-### HTTP Functions (slx.http.*)
+### HTTP Functions (http.*)
 
 * **crackrequest** ( headers ): Returns the main components of the headers of a HTTP request as a table.
  * data - Request/POST data (if any)
@@ -106,17 +106,17 @@ These will return a boolean value.
 
 ## Miscellaneous
 
-### Net Functions (slx.net.*)
+### Net Functions (net.*)
 
 * **nametoip** ( name ): Converts host name to IP address.
 * **iptoname** ( ip ): Converts IP address to host name.
 
-### Base64 Functions (slx.base64.*)
+### Base64 Functions (base64.*)
 
 * **encode** ( s ): Returns a string converted to a base64 string.
 * **decode** ( s ): Converts a base64 string to a string.
 
-### Conversion Functions (slx.convert.*)
+### Conversion Functions (convert.*)
 
 * **commastrtostr** ( s ): Converts a comma string to a string.
 * **strtoalphanum** ( s ): Converts a string to alphanumeric string.
@@ -125,16 +125,16 @@ These will return a boolean value.
 * **hextoint** ( s ): Converts a hex string to integer.
 * **hextostr** ( s ): Converts a hexadecimal string to string.
 
-### Crypto Functions (slx.crypto.*)
+### Crypto Functions (crypto.*)
 
 * **md5** ( s ): Returns the MD5 hash of a given string.
 * **sha1** ( s ): Returns the SHA-1 hash of a given string.
 
-### Task Functions (slx.task.*)
+### Task Functions (task.*)
 
 * **isrunning** ( exefilename ): Returns true if a process is running, false otherwise.
 * **kill** ( exefilename ): Closes a running process by its executable name.
 
-### Utils (slx.utils.*)
+### Utils (utils.*)
 
 * **delay** ( ms ): Waits a specific number of milliseconds before proceeding.

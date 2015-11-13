@@ -25,12 +25,13 @@ name | return type | description
 ### Example - Using html.parser
 
 ```lua
+local s = require "Selenite"
 local html = [[
 <html>
 <a href="http://www.lua.org">Lua</a>
 </html>
 ]]
-local p = slx.html.parser:new()
+local p = s.html.parser:new()
 p:load(html)
 while p:parsing() do
  print(p.tagname)

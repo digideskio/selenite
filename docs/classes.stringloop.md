@@ -28,6 +28,7 @@ name | return type | description
 ### Usage Example
 
 ```lua
+local s = require "Selenite"
 local list = [[
 Turkey
 Russia
@@ -35,7 +36,7 @@ Azerbaijan
 United Kingdom
 Montenegro
 ]]
-local p = slx.string.loop:new()
+local p = s.string.loop:new()
 p:load(list)
 while p:parsing() do
  print(p.current)

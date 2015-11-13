@@ -14,7 +14,8 @@ Stores and manipulates a JSON object.
 ### Usage Example
 
 ```lua
-j = slx.json.object:new()
+local s = require "Selenite"
+local j = s.json.object:new()
 j['name.first'] = 'Carla'
 j['name.last'] = 'Coe'
 j.year = 2013

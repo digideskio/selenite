@@ -14,7 +14,7 @@ All Selenite classes (described in `docs\classes.*`) have a "new" method that mu
 
 ## Download
 
-* [Windows](https://syhunt.websiteseguro.com/pub/downloads/selenite-1.4-pre1.zip) - 32-bit & 64-bit binaries
+* [Windows](https://syhunt.websiteseguro.com/pub/downloads/selenite-1.5-pre1.zip) - 32-bit & 64-bit binaries
 
 ## Dependencies
 
@@ -24,4 +24,4 @@ For compiling Selenite you will need [Catarinka](https://github.com/felipedarago
 
 Selenite is available under the [MIT license](http://opensource.org/licenses/MIT).
 
-Copyright (c) Felipe Daragon, 2014
+Copyright (c) Felipe Daragon, 2015

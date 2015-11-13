@@ -8,13 +8,15 @@ unit uFunctions;
 
 interface
 
+{$I Catarinka.inc}
+
 uses
-{$IF CompilerVersion >= 23} // XE2 or higher
+{$IFDEF DXE2_OR_UP}
   Winapi.Windows, System.Classes, System.SysUtils, Winapi.ShellAPI,
   System.Win.Registry,
 {$ELSE}
   Windows, Classes, SysUtils, ShellAPI, Registry,
-{$IFEND}
+{$ENDIF}
   Lua;
 
 function str_beginswith(L: plua_State): integer; cdecl;

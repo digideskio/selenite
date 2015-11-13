@@ -1,7 +1,7 @@
 -- This script performs some simple tests to make sure that functions
 -- are working adequately
-package.path = package.path..";F:/SySuite/Win32/Lib/lua/?.lua"
-package.cpath = package.cpath..";F:/SySuite/Win32/Lib/clibs/?.dll"
+package.path = package.path..";D:/SySuite/Win32/Lib/lua/?.lua"
+package.cpath = package.cpath..";D:/SySuite/Win32/Lib/clibs/?.dll"
 
 local res = {
   passed = 0,
@@ -28,7 +28,7 @@ function test(name,expected,got)
 end
 
 function runtests()
-  require "Selenite"
+  local slx = require "Selenite"
   
   -- String Matching
   test('string.beginswith (1)', true,  slx.string.beginswith('Selenite','Selen'))

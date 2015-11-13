@@ -1,4 +1,5 @@
 __history/
+__recovery/
 *.~*
 *.cfg
 *.dof
@@ -7,4 +8,5 @@ __history/
 *.dproj
 *.dproj.local
 *.identcache
+*.stat
 Thumbs.db

@@ -14,7 +14,7 @@ All Selenite classes (described in `docs\classes.*`) have a "new" method that mu
 
 ## Download
 
-* [Windows](https://syhunt.websiteseguro.com/pub/downloads/selenite-1.5-pre1.zip) - 32-bit & 64-bit binaries
+* [Windows](https://syhunt.websiteseguro.com/pub/downloads/selenite-1.5-pre2.zip) - 32-bit & 64-bit binaries
 
 ## Dependencies
 

@@ -17,8 +17,8 @@ type
   private
   public
     obj: TCatHTMLParser;
-    constructor Create(LuaState: PLua_State;
-      AParent: TLuaObject = nil); overload; override;
+    constructor Create(LuaState: PLua_State; AParent: TLuaObject = nil);
+      overload; override;
     function GetPropValue(propName: String): Variant; override;
     function SetPropValue(propName: String; const AValue: Variant)
       : Boolean; override;
@@ -97,31 +97,34 @@ begin
   result := 1;
 end;
 
-procedure RegisterSeleniteHTMLParser(L: PLua_State);
+procedure register_methods(L: PLua_State; classTable: Integer);
+begin
+  RegisterMethod(L, 'load', @method_loadfromstr, classTable);
+  RegisterMethod(L, 'parsing', @method_parsing, classTable);
+  RegisterMethod(L, 'stop', @method_stop, classTable);
+  RegisterMethod(L, 'reset', @method_reset, classTable);
+  RegisterMethod(L, 'clear', @method_clear, classTable);
+  RegisterMethod(L, 'getattrib', @method_getattrib, classTable);
+  RegisterMethod(L, 'setattrib', @method_setattrib, classTable);
+end;
+
 const
   objname = 'sel_htmlparser';
-  procedure register_methods(L: PLua_State; classTable: Integer);
-  begin
-    RegisterMethod(L, 'load', @method_loadfromstr, classTable);
-    RegisterMethod(L, 'parsing', @method_parsing, classTable);
-    RegisterMethod(L, 'stop', @method_stop, classTable);
-    RegisterMethod(L, 'reset', @method_reset, classTable);
-    RegisterMethod(L, 'clear', @method_clear, classTable);
-    RegisterMethod(L, 'getattrib', @method_getattrib, classTable);
-    RegisterMethod(L, 'setattrib', @method_setattrib, classTable);
-  end;
-  function new_callback(L: PLua_State; AParent: TLuaObject = nil): TLuaObject;
-  begin
-    result := TSeleniteHTMLParser.Create(L, AParent);
-  end;
-  function Create(L: PLua_State): Integer; cdecl;
-  var
-    p: TLuaObjectNewCallback;
-  begin
-    p := @new_callback;
-    result := new_LuaObject(L, objname, p);
-  end;
 
+function new_callback(L: PLua_State; AParent: TLuaObject = nil): TLuaObject;
+begin
+  result := TSeleniteHTMLParser.Create(L, AParent);
+end;
+
+function Create(L: PLua_State): Integer; cdecl;
+var
+  p: TLuaObjectNewCallback;
+begin
+  p := @new_callback;
+  result := new_LuaObject(L, objname, p);
+end;
+
+procedure RegisterSeleniteHTMLParser(L: PLua_State);
 begin
   RegisterTLuaObject(L, objname, @Create, @register_methods);
 end;

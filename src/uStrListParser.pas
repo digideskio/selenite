@@ -17,8 +17,8 @@ type
   private
   public
     obj: TStringLoop;
-    constructor Create(LuaState: PLua_State;
-      AParent: TLuaObject = nil); overload; override;
+    constructor Create(LuaState: PLua_State; AParent: TLuaObject = nil);
+      overload; override;
     function GetPropValue(propName: String): Variant; override;
     function SetPropValue(propName: String; const AValue: Variant)
       : Boolean; override;
@@ -130,35 +130,38 @@ begin
   result := 1;
 end;
 
-procedure RegisterSeleniteStrListParser(L: PLua_State);
+procedure register_methods(L: PLua_State; classTable: Integer);
+begin
+  RegisterMethod(L, 'indexof', @method_indexof, classTable);
+  RegisterMethod(L, 'load', @method_loadfromstr, classTable);
+  RegisterMethod(L, 'loadfromfile', @method_loadfromfile, classTable);
+  RegisterMethod(L, 'parsing', @method_parsing, classTable);
+  RegisterMethod(L, 'savetofile', @method_savetofile, classTable);
+  RegisterMethod(L, 'stop', @method_stop, classTable);
+  RegisterMethod(L, 'reset', @method_reset, classTable);
+  RegisterMethod(L, 'clear', @method_clear, classTable);
+  RegisterMethod(L, 'curgetvalue', @method_getvalue, classTable);
+  RegisterMethod(L, 'curdelete', @method_delete, classTable);
+  RegisterMethod(L, 'add', @method_add, classTable);
+end;
+
 const
   objname = 'sel_listparser';
-  procedure register_methods(L: PLua_State; classTable: Integer);
-  begin
-    RegisterMethod(L, 'indexof', @method_indexof, classTable);
-    RegisterMethod(L, 'load', @method_loadfromstr, classTable);
-    RegisterMethod(L, 'loadfromfile', @method_loadfromfile, classTable);
-    RegisterMethod(L, 'parsing', @method_parsing, classTable);
-    RegisterMethod(L, 'savetofile', @method_savetofile, classTable);
-    RegisterMethod(L, 'stop', @method_stop, classTable);
-    RegisterMethod(L, 'reset', @method_reset, classTable);
-    RegisterMethod(L, 'clear', @method_clear, classTable);
-    RegisterMethod(L, 'curgetvalue', @method_getvalue, classTable);
-    RegisterMethod(L, 'curdelete', @method_delete, classTable);
-    RegisterMethod(L, 'add', @method_add, classTable);
-  end;
-  function new_callback(L: PLua_State; AParent: TLuaObject = nil): TLuaObject;
-  begin
-    result := TSeleniteStrListParser.Create(L, AParent);
-  end;
-  function Create(L: PLua_State): Integer; cdecl;
-  var
-    p: TLuaObjectNewCallback;
-  begin
-    p := @new_callback;
-    result := new_LuaObject(L, objname, p);
-  end;
 
+function new_callback(L: PLua_State; AParent: TLuaObject = nil): TLuaObject;
+begin
+  result := TSeleniteStrListParser.Create(L, AParent);
+end;
+
+function Create(L: PLua_State): Integer; cdecl;
+var
+  p: TLuaObjectNewCallback;
+begin
+  p := @new_callback;
+  result := new_LuaObject(L, objname, p);
+end;
+
+procedure RegisterSeleniteStrListParser(L: PLua_State);
 begin
   RegisterTLuaObject(L, objname, @Create, @register_methods);
 end;

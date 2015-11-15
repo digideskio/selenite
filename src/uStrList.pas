@@ -17,8 +17,8 @@ type
   private
   public
     obj: TStringList;
-    constructor Create(LuaState: PLua_State;
-      AParent: TLuaObject = nil); overload; override;
+    constructor Create(LuaState: PLua_State; AParent: TLuaObject = nil);
+      overload; override;
     function GetPropValue(propName: String): Variant; override;
     function SetPropValue(propName: String; const AValue: Variant)
       : Boolean; override;
@@ -110,32 +110,35 @@ begin
   result := 1;
 end;
 
-procedure RegisterSeleniteStrList(L: PLua_State);
+procedure register_methods(L: PLua_State; classTable: Integer);
+begin
+  RegisterMethod(L, 'add', @method_add, classTable);
+  RegisterMethod(L, 'insert', @method_insert, classTable);
+  RegisterMethod(L, 'indexof', @method_indexof, classTable);
+  RegisterMethod(L, 'delete', @method_delete, classTable);
+  RegisterMethod(L, 'clear', @method_clear, classTable);
+  RegisterMethod(L, 'loadfromfile', @method_loadfromfile, classTable);
+  RegisterMethod(L, 'savetofile', @method_savetofile, classTable);
+  RegisterMethod(L, 'sort', @method_sort, classTable);
+end;
+
 const
   ObjName = 'sel_stringlist';
-  procedure register_methods(L: PLua_State; classTable: Integer);
-  begin
-    RegisterMethod(L, 'add', @method_add, classTable);
-    RegisterMethod(L, 'insert', @method_insert, classTable);
-    RegisterMethod(L, 'indexof', @method_indexof, classTable);
-    RegisterMethod(L, 'delete', @method_delete, classTable);
-    RegisterMethod(L, 'clear', @method_clear, classTable);
-    RegisterMethod(L, 'loadfromfile', @method_loadfromfile, classTable);
-    RegisterMethod(L, 'savetofile', @method_savetofile, classTable);
-    RegisterMethod(L, 'sort', @method_sort, classTable);
-  end;
-  function new_callback(L: PLua_State; AParent: TLuaObject = nil): TLuaObject;
-  begin
-    result := TSeleniteStrList.Create(L, AParent);
-  end;
-  function Create(L: PLua_State): Integer; cdecl;
-  var
-    p: TLuaObjectNewCallback;
-  begin
-    p := @new_callback;
-    result := new_LuaObject(L, ObjName, p);
-  end;
 
+function new_callback(L: PLua_State; AParent: TLuaObject = nil): TLuaObject;
+begin
+  result := TSeleniteStrList.Create(L, AParent);
+end;
+
+function Create(L: PLua_State): Integer; cdecl;
+var
+  p: TLuaObjectNewCallback;
+begin
+  p := @new_callback;
+  result := new_LuaObject(L, ObjName, p);
+end;
+
+procedure RegisterSeleniteStrList(L: PLua_State);
 begin
   RegisterTLuaObject(L, ObjName, @Create, @register_methods);
 end;

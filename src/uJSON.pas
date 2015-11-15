@@ -20,8 +20,8 @@ type
     function GetPropValue(propName: String): Variant; override;
     function SetPropValue(propName: String; const AValue: Variant)
       : Boolean; override;
-    constructor Create(LuaState: PLua_State;
-      AParent: TLuaObject = nil); overload; override;
+    constructor Create(LuaState: PLua_State; AParent: TLuaObject = nil);
+      overload; override;
     destructor Destroy; override;
   end;
 
@@ -58,29 +58,32 @@ begin
   result := 1;
 end;
 
-procedure RegisterSeleniteJSON(L: PLua_State);
+procedure register_methods(L: PLua_State; classTable: Integer);
+begin
+  RegisterMethod(L, '__tostring', @method_gettext, classTable);
+  RegisterMethod(L, 'getjson', @method_gettext, classTable);
+  RegisterMethod(L, 'getjson_unquoted', @method_gettext_withunquotedkeys,
+    classTable);
+  RegisterMethod(L, 'load', @method_settext, classTable);
+end;
+
 const
   cObjectName = 'sel_json';
-  procedure register_methods(L: PLua_State; classTable: Integer);
-  begin
-    RegisterMethod(L, '__tostring', @method_gettext, classTable);
-    RegisterMethod(L, 'getjson', @method_gettext, classTable);
-    RegisterMethod(L, 'getjson_unquoted', @method_gettext_withunquotedkeys,
-      classTable);
-    RegisterMethod(L, 'load', @method_settext, classTable);
-  end;
-  function new_callback(L: PLua_State; AParent: TLuaObject = nil): TLuaObject;
-  begin
-    result := TSeleniteJSON.Create(L, AParent);
-  end;
-  function Create(L: PLua_State): Integer; cdecl;
-  var
-    p: TLuaObjectNewCallback;
-  begin
-    p := @new_callback;
-    result := new_LuaObject(L, cObjectName, p);
-  end;
 
+function new_callback(L: PLua_State; AParent: TLuaObject = nil): TLuaObject;
+begin
+  result := TSeleniteJSON.Create(L, AParent);
+end;
+
+function Create(L: PLua_State): Integer; cdecl;
+var
+  p: TLuaObjectNewCallback;
+begin
+  p := @new_callback;
+  result := new_LuaObject(L, cObjectName, p);
+end;
+
+procedure RegisterSeleniteJSON(L: PLua_State);
 begin
   RegisterTLuaObject(L, cObjectName, @Create, @register_methods);
 end;

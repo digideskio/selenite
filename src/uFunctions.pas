@@ -31,6 +31,7 @@ function str_after(L: plua_State): integer; cdecl;
 function str_before(L: plua_State): integer; cdecl;
 function str_random(L: plua_State): integer; cdecl;
 function str_lastchar(L: plua_State): integer; cdecl;
+function str_maxlen(L: plua_State): integer; cdecl;
 function str_extracttagcontent(L: plua_State): integer; cdecl;
 function str_gettoken(L: plua_State): integer; cdecl;
 function str_replace(L: plua_State): integer; cdecl;
@@ -122,6 +123,20 @@ end;
 function str_endswith(L: plua_State): integer; cdecl;
 begin
   lua_pushboolean(L, endswith(lua_tostring(L, 1), lua_tostring(L, 2)));
+  result := 1;
+end;
+
+function str_maxlen(L: plua_State): integer; cdecl;
+var
+  s: string;
+  AddEllipsis: boolean;
+begin
+  AddEllipsis := false;
+  if lua_isnone(L, 3) = false then
+    AddEllipsis := lua_toboolean(L, 3);
+  s := lua_tostring(L, 1);
+  s := strmaxlen(s, lua_tointeger(L, 2), AddEllipsis);
+  lua_pushstring(L, s);
   result := 1;
 end;
 
@@ -420,15 +435,17 @@ begin
 end;
 
 function conv_strtomd5(L: plua_State): integer; cdecl;
-var s:string;
+var
+  s: string;
 begin
-  s:=string(MD5hash(UTF8string(lua_tostring(L, 1))));
+  s := string(MD5hash(UTF8string(lua_tostring(L, 1))));
   lua_pushstring(L, s);
   result := 1;
 end;
 
 function conv_strtosha1(L: plua_State): integer; cdecl;
-var s:string;
+var
+  s: string;
   function StrToHex(const Value: AnsiString): string;
   var
     n: integer;
@@ -439,8 +456,8 @@ var s:string;
   end;
 
 begin
-  s:= string(SHA1(ansistring(lua_tostring(L, 1))));
-  s:= lowercase(StrToHex(ansistring(s)));
+  s := string(SHA1(AnsiString(lua_tostring(L, 1))));
+  s := lowercase(StrToHex(AnsiString(s)));
   lua_pushstring(L, s);
   result := 1;
 end;
@@ -702,7 +719,7 @@ begin
 end;
 
 // Usage example: HasSoftwareInstalled('Python')
-function HasSoftwareInstalled(s: string): Boolean;
+function HasSoftwareInstalled(s: string): boolean;
 var
   reg: TRegistry;
 begin

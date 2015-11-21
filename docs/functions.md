@@ -31,6 +31,7 @@
 * **gettoken** ( s, delim, int ): Returns what comes after a delimiter.
 * **increase** ( s [,step] ): Increases the string characters.
 * **lastchar** ( s ): Returns the last character of a string.
+* **maxlen** ( s, max [,addellipsis] ): Cuts a string if it exceeds the max number of characters.
 * **occur** ( s, sub ): Returns the count of the occurrence of a particular string or character.
 * **random** ( int ): Returns a random string that is the length of your choosing.
 * **replace** ( s, find, rep ): Replaces a string.

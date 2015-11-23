@@ -236,7 +236,7 @@ end;
 
 type
   TFileFields = (f_canopen, f_copy, f_delete, f_exec, f_exechide, f_exists,
-    f_getcontents, f_getname, f_getext, f_getver);
+    f_getcontents, f_getname, f_getext, f_getsize, f_getver);
 
 function get_filefields(L: plua_State): integer; cdecl;
 begin
@@ -259,6 +259,8 @@ begin
       lua_pushcfunction(L, file_gettostr);
     f_getname:
       lua_pushcfunction(L, file_extractname);
+    f_getsize:
+      lua_pushcfunction(L, file_getsize);
     f_getext:
       lua_pushcfunction(L, file_getext);
     f_getver:

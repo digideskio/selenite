@@ -11,6 +11,7 @@
 * **getcontents** ( filename ): Returns the contents of a local file.
 * **getext** ( filename ): Gets the extension part of a filename.
 * **getname** ( filename ): Gets the name and extension part of a filename.
+* **getsize** ( filename ): Gets the size in bytes of a filename.
 * **getver** ( filename ): Gets the version of a binary file.
 
 ### Directory Functions (dir.*)

@@ -58,6 +58,7 @@ function file_exists(L: plua_State): integer; cdecl;
 function file_canopen(L: plua_State): integer; cdecl;
 function file_mkdir(L: plua_State): integer; cdecl;
 function file_copy(L: plua_State): integer; cdecl;
+function file_getsize(L: plua_State): integer; cdecl;
 function file_gettostr(L: plua_State): integer; cdecl;
 function file_exec(L: plua_State): integer; cdecl;
 function file_exechidden(L: plua_State): integer; cdecl;
@@ -542,6 +543,12 @@ end;
 function file_getext(L: plua_State): integer; cdecl;
 begin
   lua_pushstring(L, extractfileext(lua_tostring(L, 1)));
+  result := 1;
+end;
+
+function file_getsize(L: plua_State): integer; cdecl;
+begin
+  lua_pushinteger(L, GetFileSize(lua_tostring(L, 1)));
   result := 1;
 end;
 

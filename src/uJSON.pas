@@ -2,7 +2,7 @@ unit uJSON;
 
 {
   Selenite Lua Library - JSON Object
-  Copyright (c) 2013-2014 Felipe Daragon
+  Copyright (c) 2013-2015 Felipe Daragon
   License: MIT (http://opensource.org/licenses/mit-license.php)
 }
 
@@ -40,6 +40,24 @@ begin
   result := 1;
 end;
 
+function method_loadfromfile(L: PLua_State): Integer; cdecl;
+var
+  o: TSeleniteJSON;
+begin
+  o := TSeleniteJSON(LuaToTLuaObject(L, 1));
+  o.obj.LoadFromFile(lua_tostring(L, 2));
+  result := 1;
+end;
+
+function method_savetofile(L: PLua_State): Integer; cdecl;
+var
+  o: TSeleniteJSON;
+begin
+  o := TSeleniteJSON(LuaToTLuaObject(L, 1));
+  o.obj.SaveToFile(lua_tostring(L, 2));
+  result := 1;
+end;
+
 function method_gettext(L: PLua_State): Integer; cdecl;
 var
   o: TSeleniteJSON;
@@ -65,6 +83,8 @@ begin
   RegisterMethod(L, 'getjson_unquoted', @method_gettext_withunquotedkeys,
     classTable);
   RegisterMethod(L, 'load', @method_settext, classTable);
+  RegisterMethod(L, 'loadfromfile', @method_loadfromfile, classTable);
+  RegisterMethod(L, 'savetofile', @method_savetofile, classTable);
 end;
 
 const

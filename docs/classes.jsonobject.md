@@ -6,6 +6,8 @@ Stores and manipulates a JSON object.
 
 * **getjson** ( ): Returns the JSON object as a string. Alternatively, you can use the Lua tostring() function.
 * **load** ( s ): Loads a JSON object from a string.
+* **loadfromfile** ( filename ): Loads a JSON object from a file.
+* **savetofile** ( filename ): Saves the JSON object to a file.
 
 ### Properties
 
